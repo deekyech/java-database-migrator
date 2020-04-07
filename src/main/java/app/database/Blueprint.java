@@ -1,42 +1,25 @@
 package app.database;
 
+import java.util.List;
+
 public class Blueprint {
-	public Blueprint() {
 	
+	public Blueprint(String table) {
+		this.table = table;
 	}
 	
-	public Integer getId() {
-		return id;
+	public void id() {
+		this.id("id");
 	}
 	
-	public void setId(Integer id) {
-		this.id = id;
+	public void id(String fieldName) {
+		this.addColumn(ColumnBuilder.id(fieldName));
 	}
 	
-	public String getName() {
-		return name;
+	public void addColumn(ColumnBuilder builder) {
+		this.columns.add(builder.build());
 	}
 	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getPhone() {
-		return phone;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
-	public Integer id;
-	public String name, email, phone;
+	private String table;
+	private List<Column> columns;
 }
