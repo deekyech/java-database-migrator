@@ -32,5 +32,7 @@ abstract class Constraint implements TableEntity {
 	 */
 	public abstract void printConstraint();
 	
+	public abstract String getDefinition();
+	
 	private String fieldName;
 }

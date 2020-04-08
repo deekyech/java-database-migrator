@@ -1,12 +1,13 @@
 package app.database;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
 /**
  * class Table:
- * A model class that stores all the attributes of a database table.
+ * A model class that stores all the attributes of a database tableName.
  */
 public class Table {
 	
@@ -14,7 +15,7 @@ public class Table {
 	 * *************************CONSTRUCTOR*******************************
 	 *********************************************************************/
 	public Table(String table) {
-		this.table = table;
+		this.tableName = table;
 		columns = new ArrayList<>();
 		constraints = new ArrayList<>();
 	}
@@ -22,7 +23,7 @@ public class Table {
 	/**
 	 * id():
 	 * This method is used to define the id column as the primary key of
-	 * this table.
+	 * this tableName.
 	 */
 	public void id() {
 		this.id("id");
@@ -30,12 +31,17 @@ public class Table {
 	
 	public void id(String fieldName) {
 		this.addColumn(ColumnBuilder.id(fieldName));
+		try {
+			this.addConstraint(ConstraintBuilder.primary(fieldName));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * addColumn():
 	 * Method that will be called from the migration file to add a column to
-	 * the table.
+	 * the tableName.
 	 * @param builder : ColumnBuilder object of the column that is to be inserted
 	 */
 	public void addColumn(ColumnBuilder builder) {
@@ -45,7 +51,7 @@ public class Table {
 	/**
 	 * addConstraint():
 	 * Method that will be called from the migration file to add a constraint to
-	 * the table.
+	 * the tableName.
 	 *
 	 * @param builder : Builder object of the constraint that is to be inserted.
 	 * @throws Exception
@@ -62,13 +68,13 @@ public class Table {
 						if (isReferenceColumnPrimaryKey(foreignKeyConstraint.getReferenceFieldName())) {
 							this.constraints.add(foreignKeyConstraint);
 						} else {
-							throw new Exception("Reference table column exists but that column is not a primary key");
+							throw new Exception("Reference tableName column exists but that column is not a primary key");
 						}
 					} else {
-						throw new Exception("Reference table column not found.");
+						throw new Exception("Reference tableName column not found.");
 					}
 				} else {
-					throw new Exception("Reference table does not exist.");
+					throw new Exception("Reference tableName does not exist.");
 				}
 			} else {
 				throw new Exception("Specified column does not exist.");
@@ -106,7 +112,12 @@ public class Table {
 	}
 	
 	private boolean columnExists(String fieldName) {
-		return true;
+		Iterator<Column> iterator = this.columns.iterator();
+		while(iterator.hasNext()) {
+			Column column = iterator.next();
+			if (column.getName().equals(fieldName)) return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -114,13 +125,29 @@ public class Table {
 	 * Created for testing purposes
 	 */
 	public void printTable() {
-		System.out.println("Table " + table + "\n\nColumns List:\n");
+		System.out.println("Table " + tableName + "\n\nColumns List:\n");
 		columns.forEach(column -> column.printColumn());
 		System.out.println("\n\nConstraints List:\n");
 		constraints.forEach(constraint -> constraint.printConstraint());
 	}
 	
-	private String table;
+	
+	public Query toQuery() {
+		StringBuffer query = new StringBuffer("CREATE TABLE IF NOT EXISTS " + this.tableName + "(");
+		
+		for (Column c: columns) {
+			query.append(c.getDefinition() + ", ");
+		}
+		for (int i = 0; i<constraints.size(); i++) {
+			query.append(constraints.get(i).getDefinition());
+			if (!(i == constraints.size()-1)) query.append(", ");
+		}
+		
+		query.append(")");
+		return new Query(query.toString());
+	}
+	
+	private String tableName;
 	private List<Column> columns;
 	private List<Constraint> constraints;
 }

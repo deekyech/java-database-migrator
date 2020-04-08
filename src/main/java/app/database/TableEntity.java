@@ -6,4 +6,5 @@ package app.database;
  * database table.
  */
 public interface TableEntity {
+	String getDefinition();
 }

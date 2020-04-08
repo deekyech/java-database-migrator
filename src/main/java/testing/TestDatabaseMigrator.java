@@ -13,7 +13,7 @@ public class TestDatabaseMigrator {
 			table.addColumn(ColumnBuilder.text("body"));
 			
 			try {
-				table.addConstraint(ConstraintBuilder.foreign("user_id").references("id").on("users"));
+				table.addConstraint(ConstraintBuilder.foreign("id").references("id").on("users"));
 				table.addConstraint(ConstraintBuilder.primary("id"));
 			} catch(Exception e) {
 				e.printStackTrace();

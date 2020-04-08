@@ -4,7 +4,7 @@ package app.database;
  * class Column:
  * A model class to store all the attributes of a database column.
  */
-class Column implements TableEntity {
+public class Column implements TableEntity {
 	
 	/*********************************************************************
 	 * *************************CONSTRUCTORS******************************
@@ -92,6 +92,29 @@ class Column implements TableEntity {
 	
 	public void printColumn() {
 		System.out.println("\nColumn:\nName: " + this.getName() + "\nDatatype: " + this.getDatatype() + "\nDefaultValue: " + this.getDefaultValue() + "\nNullable: " + this.isNullable() + "\nUnique: " + this.isUnique() + "\nAutoIncrement: " + this.isAutoIncrement() + "\nSigned: " + isSigned() + "\nSize: " + this.getSize());
+	}
+	
+	public String getDefinition() {
+		String columnDefinition = this.name + " " + this.datatype;
+		if (this.size != null) {
+			columnDefinition = columnDefinition + "(" + this.size + ")";
+		}
+		if (!this.isSigned()) {
+			columnDefinition += " UNSIGNED";
+		}
+		if (!this.isNullable()) {
+			columnDefinition += " NOT NULL";
+		}
+		if (this.isUnique()) {
+			columnDefinition += " UNIQUE";
+		}
+		if (this.isAutoIncrement()) {
+			columnDefinition += " AUTO INCREMENT";
+		}
+		if (this.defaultValue != null) {
+			columnDefinition = columnDefinition + " DEFAULT '" + this.defaultValue + "'";
+		}
+		return columnDefinition;
 	}
 	
 	private String name;

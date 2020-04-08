@@ -41,6 +41,10 @@ class ForeignKeyConstraint extends Constraint {
 		System.out.println("\nForeignKeyConstraint:\nName: " + this.getFieldName() + "\nReference Field Name: " + this.getReferenceFieldName() + "\nReference Table: " + this.getReferenceTable());
 	}
 	
+	public String getDefinition() {
+		return "FOREIGN KEY " + this.getFieldName() + " REFERENCES " + this.getReferenceTable() + "(" + this.getReferenceFieldName() + ")";
+	}
+	
 	private String referenceFieldName;
 	private String referenceTable;
 }

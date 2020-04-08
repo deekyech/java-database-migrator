@@ -22,4 +22,8 @@ class PrimaryKeyConstraint extends Constraint {
 	public void printConstraint() {
 		System.out.println("\nPrimaryKeyConstraint:\nName: " + this.getFieldName() + "\n");
 	}
+	
+	public String getDefinition() {
+		return "PRIMARY KEY (" + this.getFieldName() + ")";
+	}
 }
