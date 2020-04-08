@@ -1,6 +1,6 @@
 package app.database;
 
-class Column implements BlueprintEntity {
+class Column implements TableEntity {
 	
 	public Column() {}
 	

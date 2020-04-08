@@ -1,6 +1,6 @@
 package app.database;
 
-abstract class Constraint implements BlueprintEntity {
+abstract class Constraint implements TableEntity {
 	
 	public Constraint(String fieldName) {
 		this.fieldName = fieldName;

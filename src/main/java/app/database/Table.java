@@ -3,9 +3,9 @@ package app.database;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Blueprint {
+public class Table {
 	
-	public Blueprint(String table) {
+	public Table(String table) {
 		this.table = table;
 		columns = new ArrayList<>();
 		constraints = new ArrayList<>();
@@ -24,7 +24,7 @@ public class Blueprint {
 	}
 	
 	public void addConstraint(Builder builder) throws Exception {
-		BlueprintEntity entity = builder.build();
+		TableEntity entity = builder.build();
 		if (entity instanceof ForeignKeyConstraint) {
 			ForeignKeyConstraint foreignKeyConstraint = (ForeignKeyConstraint) entity;
 			if (columnExists(foreignKeyConstraint.getFieldName())) {
