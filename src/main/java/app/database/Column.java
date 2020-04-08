@@ -1,6 +1,8 @@
 package app.database;
 
-class Column {
+class Column implements BlueprintEntity {
+	
+	public Column() {}
 	
 	public Column(String name, String datatype, Object defaultValue, boolean nullable, boolean unique, boolean autoIncrement, boolean signed, Integer size) {
 		this.name = name;
@@ -75,6 +77,10 @@ class Column {
 	
 	public void setSize(Integer size) {
 		this.size = size;
+	}
+	
+	public void printColumn() {
+		System.out.println("\nColumn:\nName: " + this.getName() + "\nDatatype: " + this.getDatatype() + "\nDefaultValue: " + this.getDefaultValue() + "\nNullable: " + this.isNullable() + "\nUnique: " + this.isUnique() + "\nAutoIncrement: " + this.isAutoIncrement() + "\nSigned: " + isSigned() + "\nSize: " + this.getSize());
 	}
 	
 	private String name;

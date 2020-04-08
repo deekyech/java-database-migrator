@@ -8,6 +8,7 @@ public class DatabaseMigrator {
 	public static void create(String tableName, Consumer<Blueprint> callback) {
 		Blueprint table = new Blueprint(tableName);
 		callback.accept(table);
+		table.printTable();
 //		System.out.println("Table: " + tableName + "\nBlueprint:\nID: " + table.getId() + "\nName: " + table.getName());
 	}
 }

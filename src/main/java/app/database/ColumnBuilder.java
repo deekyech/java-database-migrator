@@ -1,10 +1,11 @@
 package app.database;
 
-public class ColumnBuilder {
+public class ColumnBuilder implements Builder {
 	
 	private ColumnBuilder(Column column) {
 		this.column = column;
 	}
+
 	
 	static ColumnBuilder id(String fieldName) {
 		return new ColumnBuilder(new Column(fieldName, "bigint", null, false, false, true, false, new Integer(20)));
