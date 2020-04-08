@@ -7,7 +7,6 @@ import app.database.ConstraintBuilder;
 public class TestDatabaseMigrator {
 	public static void main(String[] args) {
 		DatabaseMigrator.create("users", (table) -> {
-			
 			table.id();
 			table.addColumn(ColumnBuilder.string("title"));
 			table.addColumn(ColumnBuilder.string("slug").nullable().unique());
@@ -23,3 +22,21 @@ public class TestDatabaseMigrator {
 		});
 	}
 }
+
+
+/*
+package testing;
+
+import app.DatabaseMigrator;
+import app.database.ColumnBuilder;
+import app.database.ConstraintBuilder;
+
+public class TestDatabaseMigrator {
+	public static void main(String[] args) {
+		DatabaseMigrator.create("users", (table) -> {
+			table.id();
+
+		});
+	}
+}
+*/
