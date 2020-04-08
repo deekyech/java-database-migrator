@@ -1,11 +1,22 @@
 package app.database;
 
+/**
+ * abstract class Constraint:
+ * An abstract class to define all the attributes of a database constraint.
+ */
 abstract class Constraint implements TableEntity {
 	
+	/*********************************************************************
+	 * *************************CONSTRUCTOR*******************************
+	 *********************************************************************/
 	public Constraint(String fieldName) {
 		this.fieldName = fieldName;
 	}
 	
+	
+	/*********************************************************************
+	 * *********************GETTERS and SETTERS***************************
+	 *********************************************************************/
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -14,6 +25,11 @@ abstract class Constraint implements TableEntity {
 		this.fieldName = fieldName;
 	}
 	
+	
+	/**
+	 * printConstraint():
+	 * Method used for testing.
+	 */
 	public abstract void printConstraint();
 	
 	private String fieldName;

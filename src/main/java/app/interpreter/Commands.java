@@ -1,5 +1,10 @@
 package app.interpreter;
 
+
+/**
+ * interface Commands:
+ * An interface to store the constants of all commands.
+ */
 public interface Commands {
 	String CREATE_MIGRATION_COMMAND = "cm";
 	String HELP_COMMAND = "help";

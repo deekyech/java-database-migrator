@@ -1,7 +1,20 @@
 package app.database;
 
+/**
+ * class ColumnBuilder:
+ * A builder class responsible for building columns in the table.
+ * It has a data member column. This class will keep modifying the
+ * attributes of the column as per migration file. Once the column is
+ * fully built, it is added to the table.
+ * By the use of this class, chaining can be achieved in the migrations.
+ * You can notice that all methods of this class return this.
+ * This has been done to implement chaining.
+ */
 public class ColumnBuilder implements Builder {
 	
+	/*********************************************************************
+	 * *************************CONSTRUCTOR*******************************
+	 *********************************************************************/
 	private ColumnBuilder(Column column) {
 		this.column = column;
 	}

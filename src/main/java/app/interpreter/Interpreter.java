@@ -4,11 +4,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+/**
+ *
+ *  class Interpreter:
+ *
+ *  The class that will execute the interpreter for all user cammand inputs.
+ */
 public class Interpreter {
+	
+	/*********************************************************************
+	 * *************************CONSTRUCTOR*******************************
+	 *********************************************************************/
+	
 	public Interpreter() {
 		this.run();
 	}
 	
+	/**
+	 * run():
+	 * The method that will accept the user input commands.
+	 */
 	private void run() {
 		while (true) {
 			System.out.print("> ");
@@ -23,6 +39,11 @@ public class Interpreter {
 		}
 	}
 	
+	/**
+	 * acceptInput():
+	 * This method will read the input from the user console.
+	 * @return : user command input
+	 */
 	private String acceptInput() {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -33,6 +54,14 @@ public class Interpreter {
 		}
 	}
 	
+	/**
+	 *
+	 * isCommand():
+	 * This method will check whether the specified command is a valid command or not.
+	 *
+	 * @param command : The command that needs to be checked.
+	 * @return : Will return the result whether the specified command is a valid command or not.
+	 */
 	private boolean isCommand(String command) {
 		for (int i = 0; i<Commands.ALL_COMMANDS.length; i++) {
 			if (Commands.ALL_COMMANDS[i].equals(command)) {
@@ -42,12 +71,27 @@ public class Interpreter {
 		return false;
 	}
 	
+	/**
+	 * getCommand():
+	 * This method will retrieve the command(first word) from the whole user input.
+	 *
+	 * @param input : User console input
+	 * @return : Command
+	 */
 	private String getCommand(String input) {
 		int index = input.indexOf(' ');
 		if (index == -1) return input;
 		return input.substring(0, index).trim();
 	}
 	
+	
+	/**
+	 * getArguments():
+	 * This method will retrieve the arguments for the specified commands from the whole user input.
+	 *
+	 * @param input : User console input
+	 * @return : Argument string
+	 */
 	private String getArguments(String input) {
 		int index = input.indexOf(' ');
 		if (index == -1) return null;

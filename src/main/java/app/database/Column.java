@@ -1,7 +1,14 @@
 package app.database;
 
+/**
+ * class Column:
+ * A model class to store all the attributes of a database column.
+ */
 class Column implements TableEntity {
 	
+	/*********************************************************************
+	 * *************************CONSTRUCTORS******************************
+	 *********************************************************************/
 	public Column() {}
 	
 	public Column(String name, String datatype, Object defaultValue, boolean nullable, boolean unique, boolean autoIncrement, boolean signed, Integer size) {
@@ -14,6 +21,10 @@ class Column implements TableEntity {
 		this.signed = signed;
 		this.size = size;
 	}
+	
+	/*********************************************************************
+	 * **********************Getters and Setters**************************
+	 *********************************************************************/
 	
 	public String getName() {
 		return name;

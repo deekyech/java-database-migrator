@@ -6,12 +6,31 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+/**
+ * class CreatedMigration:
+ *
+ * This class is responsible for accepting arguments from the user
+ * console inputs after the cm(create-migration) command and it will
+ * create the migration file based on these arguments.
+ */
 class CreateMigration {
+	
+	/*********************************************************************
+	 * *************************CONSTRUCTOR*******************************
+	 *********************************************************************/
 	public CreateMigration(String args) {
 		this.computeDataMembers(args);
 		this.performOperation();
 	}
 	
+	/**
+	 * computeDataMembers():
+	 * This method will generate all the values required for generating a
+	 * migration file. The data members values generated will be targetFileName,
+	 * tableName, operation to be performed.
+	 * @param args : User console inputs
+	 */
 	private void computeDataMembers(String args) {
 		if (!(args == null || "".equals(args))) {
 			this.fileName = this.computeFileName(args);
@@ -23,10 +42,23 @@ class CreateMigration {
 		} else System.out.println("-usage: cm <file_name> [<table_name>]");
 	}
 	
+	/**
+	 * computeTargetFileName():
+	 * This file will generate the target migration file name by adding the
+	 * timestamp to the specified fileName.
+	 *
+	 * @param fileName : Specified fileName
+	 * @return : target migration fileName
+	 */
 	private String computeTargetFileName(String fileName) {
 		return fileName + new Date().getTime();
 	}
 	
+	/**
+	 * performOperation():
+	 * This method is responsible for generating the target file by taking all
+	 * data members and adding them to the predefined template.
+	 */
 	private void performOperation() {
 		try {
 			File migrationFile = new File("D:\\Dhiresh\\Drive Sync\\Coding\\Java\\Java Projects\\JavaDatabaseMigrator\\src\\main\\java\\app\\migrations\\" + this.targetFileName + ".java");
@@ -55,17 +87,50 @@ class CreateMigration {
 		}
 	}
 	
+	
+	/**
+	 * isNameValid():
+	 * A validation method to check whether the fileName entered by user
+	 * is of the required syntax or not.
+	 *
+	 * @param input : User console input
+	 * @return : Result of validation
+	 */
 	private boolean isNameValid(String input) {
 		String nameRegex = "^(Create|Alter)(([A-Z][a-z]+)+)Table$";
 		return Pattern.compile(nameRegex).matcher(input).matches();
 	}
 	
+	
+	/**
+	 * computeFileName():
+	 * This method is responsible for retrieving the fileName from the
+	 * user console input.
+	 *
+	 * @param input : user console input
+	 * @return : fileName as entered by user.
+	 */
 	private String computeFileName(String input) {
 		int index = input.indexOf(' ');
 		if (index == -1) return input;
 		return input.substring(0, index).trim();
 	}
 	
+	
+	/**
+	 * computeTableName():
+	 * This method is responsible for generating the tableName.
+	 * Since there is an option given for adding a custom-table name.
+	 * If a table name is specified by the user, it is returned straightaway.
+	 * If the table is not mentioned, it is generated into an sql-friendly
+	 * format by retrieving it from the file name syntax.
+	 *
+	 * Eg: I/P: CreateUserAddressesTable
+	 * O/P: user-addresses
+	 *
+	 * @param arguments : User console input
+	 * @return : desired table name in sql-friendly format
+	 */
 	private String computeTableName(String arguments) {
 		if (this.isTableNamePresent(arguments)) {
 			int index = arguments.indexOf(' ');
@@ -88,6 +153,14 @@ class CreateMigration {
 		}
 	}
 	
+	/**
+	 * computeOperation():
+	 * This method will retrieve the operation to be performed (create or alter)
+	 * from the file name specified by the user.
+	 *
+	 * @param fileName : file name specified by user
+	 * @return : operation to be performed
+	 */
 	private String computeOperation(String fileName) {
 		String findOperationRegex = "^([A-Z][a-z]+?)(([A-Z][a-z]+)+?)Table$";
 		Pattern findOperationPattern = Pattern.compile(findOperationRegex);
@@ -96,6 +169,12 @@ class CreateMigration {
 		else throw new IllegalStateException("Migration name entered is weird");
 	}
 	
+	/**
+	 * isTableNamePresent():
+	 * Check whether the user has specified table name or not.
+	 * @param arguments : User console input
+	 * @return : Result whether the table is specified or not.
+	 */
 	private boolean isTableNamePresent(String arguments) {
 		int index = arguments.indexOf(' ');
 		return !(index == -1);
