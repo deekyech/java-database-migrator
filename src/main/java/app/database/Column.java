@@ -11,7 +11,7 @@ public class Column implements TableEntity {
 	 *********************************************************************/
 	public Column() {}
 	
-	public Column(String name, String datatype, Object defaultValue, boolean nullable, boolean unique, boolean autoIncrement, boolean signed, Integer size) {
+	public Column(String name, String datatype, Object defaultValue, boolean nullable, boolean unique, boolean autoIncrement, Boolean signed, Integer size) {
 		this.name = name;
 		this.datatype = datatype;
 		this.defaultValue = defaultValue;
@@ -74,11 +74,11 @@ public class Column implements TableEntity {
 		this.autoIncrement = autoIncrement;
 	}
 	
-	public boolean isSigned() {
+	public Boolean isSigned() {
 		return signed;
 	}
 	
-	public void setSigned(boolean signed) {
+	public void setSigned(Boolean signed) {
 		this.signed = signed;
 	}
 	
@@ -99,8 +99,12 @@ public class Column implements TableEntity {
 		if (this.size != null) {
 			columnDefinition = columnDefinition + "(" + this.size + ")";
 		}
-		if (!this.isSigned()) {
-			columnDefinition += " UNSIGNED";
+		if (this.isSigned() != null) {
+			if (!this.isSigned()) {
+				columnDefinition += " UNSIGNED";
+			} else {
+				columnDefinition += " SIGNED";
+			}
 		}
 		if (!this.isNullable()) {
 			columnDefinition += " NOT NULL";
@@ -109,10 +113,10 @@ public class Column implements TableEntity {
 			columnDefinition += " UNIQUE";
 		}
 		if (this.isAutoIncrement()) {
-			columnDefinition += " AUTO INCREMENT";
+			columnDefinition += " AUTO_INCREMENT";
 		}
 		if (this.defaultValue != null) {
-			columnDefinition = columnDefinition + " DEFAULT '" + this.defaultValue + "'";
+			columnDefinition = columnDefinition + " DEFAULT " + this.defaultValue;
 		}
 		return columnDefinition;
 	}
@@ -123,6 +127,6 @@ public class Column implements TableEntity {
 	private boolean nullable;
 	private boolean unique;
 	private boolean autoIncrement;
-	private boolean signed;
+	private Boolean signed;
 	private Integer size;
 }

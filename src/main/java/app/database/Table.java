@@ -1,5 +1,9 @@
 package app.database;
 
+import app.database.constraints.Constraint;
+import app.database.constraints.ConstraintBuilder;
+import app.database.queries.Query;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -59,14 +63,30 @@ public class Table {
 	public void addConstraint(Builder builder) throws Exception {
 		TableEntity entity = builder.build();
 		Constraint constraint = (Constraint) entity;
-		if (this.columnExists(constraint.getFieldName())) {
-			if (!this.constraintExists(constraint.getFieldName())) {
-				this.constraints.add(constraint);
+		if (!constraint.isMultiColumn()) {
+			if (this.columnExists(constraint.getFieldName())) {
+				if (!this.constraintExists(constraint.getFieldName())) {
+					this.constraints.add(constraint);
+				} else {
+					throw new Exception("Constraint already exists on specified column.");
+				}
 			} else {
-				throw new Exception("Constraint already exists on specified column.");
+				throw new Exception("Specified column does not exist.");
 			}
 		} else {
-			throw new Exception("Specified column does not exist.");
+			List<String> columnList = constraint.getColumnNames();
+			for (String column: columnList) {
+				if (this.columnExists(column)) {
+					if (!this.constraintExists(column)) {
+					
+					} else {
+						throw new Exception("Constraint already exists on specified column.");
+					}
+				} else {
+					throw new Exception("Specified column does not exist.");
+				}
+			}
+			this.constraints.add(constraint);
 		}
 	}
 	
@@ -119,10 +139,10 @@ public class Table {
 	public Query toQuery() {
 		StringBuffer query = new StringBuffer("CREATE TABLE IF NOT EXISTS " + this.tableName + "(");
 		
-		for (Column c: columns) {
+		/*for (Column c: columns) {
 			query.append(c.getDefinition() + ", ");
 		}
-		
+		*/
 		for (int i = 0; i<columns.size(); i++) {
 			query.append(columns.get(i).getDefinition());
 			if (!(i == columns.size()-1)) query.append(", ");

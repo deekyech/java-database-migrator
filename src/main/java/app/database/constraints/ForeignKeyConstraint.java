@@ -1,4 +1,4 @@
-package app.database;
+package app.database.constraints;
 
 
 /**
@@ -33,6 +33,22 @@ class ForeignKeyConstraint extends Constraint {
 		this.referenceTable = referenceTable;
 	}
 	
+	public String getOnDeleteOption() {
+		return onDeleteOption;
+	}
+	
+	public void setOnDeleteOption(String onDeleteOption) {
+		this.onDeleteOption = onDeleteOption;
+	}
+	
+	public String getOnUpdateOption() {
+		return onUpdateOption;
+	}
+	
+	public void setOnUpdateOption(String onUpdateOption) {
+		this.onUpdateOption = onUpdateOption;
+	}
+	
 	/**
 	 * printConstraint():
 	 * A method used for testing
@@ -42,9 +58,14 @@ class ForeignKeyConstraint extends Constraint {
 	}
 	
 	public String getDefinition() {
-		return "FOREIGN KEY " + this.getFieldName() + " REFERENCES " + this.getReferenceTable() + "(" + this.getReferenceFieldName() + ")";
+		String constraintDefinition = "FOREIGN KEY (" + this.getFieldName() + ") REFERENCES " + this.getReferenceTable() + " (" + this.getReferenceFieldName() + ")";
+		if (this.getOnDeleteOption() != null) constraintDefinition = constraintDefinition + " ON DELETE " + this.getOnDeleteOption();
+		if (this.getOnUpdateOption() != null) constraintDefinition = constraintDefinition + " ON UPDATE " + this.getOnUpdateOption();
+		return constraintDefinition;
 	}
 	
 	private String referenceFieldName;
 	private String referenceTable;
+	private String onDeleteOption;
+	private String onUpdateOption;
 }

@@ -1,6 +1,7 @@
 package app;
 
 import app.database.Table;
+import app.database.queries.QueryExecuter;
 
 import java.util.function.Consumer;
 
@@ -25,6 +26,7 @@ public class DatabaseMigrator {
 	public static void create(String tableName, Consumer<Table> callback) {
 		Table table = new Table(tableName);
 		callback.accept(table);
-		System.out.println(table.toQuery());
+		new QueryExecuter(table.toQuery()).execute();
+		//System.out.println(table.toQuery());
 	}
 }

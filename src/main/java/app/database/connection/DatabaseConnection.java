@@ -25,6 +25,7 @@ public class DatabaseConnection {
 			Connection conn = DriverManager.getConnection("jdbc:" + envParser.getDatabaseVariable("DB_CONNECTION") + "://" + envParser.getDatabaseVariable("DB_HOST") + ":" + envParser.getDatabaseVariable("DB_PORT") + "/" + envParser.getDatabaseVariable("DB_DATABASE"), envParser.getDatabaseVariable("DB_USERNAME"), envParser.getDatabaseVariable("DB_PASSWORD"));
 			return conn;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

@@ -19,7 +19,8 @@ class ParseEnv {
 	ParseEnv() {
 		
 		try {
-			envFile = new File("../../../resources/.env");
+			envFile = new File("D:\\Dhiresh\\Drive Sync\\Coding\\Java\\Java Projects\\JavaDatabaseMigrator\\src\\main\\resources\\.env");
+			variables = new HashMap<>();
 			
 			/**
 			 * The following code reads all lines from the .env file and for each
@@ -28,7 +29,9 @@ class ParseEnv {
 			 */
 			Files
 					.readAllLines(envFile.toPath())
-					.forEach((line) -> variables.put(line.split("=")[0], line.split("=")[1]));
+					.forEach((line) -> {
+						if (!("".equals(line) || line == null)) variables.put(line.split("=")[0], line.split("=")[1]);
+					});
 			
 		} catch (IOException e) {
 			e.getStackTrace();

@@ -1,4 +1,4 @@
-package app.database;
+package app.database.queries;
 
 /**
  * class Query:
@@ -18,7 +18,7 @@ public class Query {
 	 * *********************GETTERS AND SETTERS***************************
 	 *********************************************************************/
 	public String getQuery() {
-		return query;
+		return this.query;
 	}
 	
 	public void setQuery(String query) {

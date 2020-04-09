@@ -1,4 +1,6 @@
-package app.database;
+package app.database.constraints;
+
+import app.database.Builder;
 
 /**
  * class PrimaryKeyConstraintBuilder:

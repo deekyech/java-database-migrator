@@ -1,4 +1,4 @@
-package app.database;
+package app.database.constraints;
 
 /**
  * class ConstraintBuilder:
@@ -35,6 +35,15 @@ public class ConstraintBuilder {
 	 */
 	public static PrimaryKeyConstraintBuilder primary(String fieldName) {
 		return new PrimaryKeyConstraintBuilder(new PrimaryKeyConstraint(fieldName));
+	}
+	
+	
+	public static UniqueConstraintBuilder unique(String[] columnNames) {
+		return new UniqueConstraintBuilder(new UniqueConstraint(columnNames));
+	}
+	
+	public static UniqueConstraintBuilder unique(String columnName) {
+		return new UniqueConstraintBuilder(new UniqueConstraint(columnName));
 	}
 	
 }

@@ -1,4 +1,6 @@
-package app.database;
+package app.database.constraints;
+
+import app.database.Builder;
 
 /**
  * class ForeignKeyConstraintBuilder:
@@ -27,6 +29,20 @@ public class ForeignKeyConstraintBuilder implements Builder {
 	public ForeignKeyConstraintBuilder on(String referenceTableName) {
 		this.foreignKeyConstraint.setReferenceTable(referenceTableName);
 		return this;
+	}
+	
+	public ForeignKeyConstraintBuilder onDelete(String onDeleteOption) {
+		this.foreignKeyConstraint.setOnDeleteOption(onDeleteOption);
+		return this;
+	}
+	
+	public ForeignKeyConstraintBuilder onUpdate(String onUpdateOption) {
+		this.foreignKeyConstraint.setOnUpdateOption(onUpdateOption);
+		return this;
+	}
+	
+	public ForeignKeyConstraintBuilder onDeleteCascade() {
+		return this.onDelete("CASCADE");
 	}
 	
 	public ForeignKeyConstraint build() {

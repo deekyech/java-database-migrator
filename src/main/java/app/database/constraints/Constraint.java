@@ -1,18 +1,29 @@
-package app.database;
+package app.database.constraints;
+
+import app.database.TableEntity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * abstract class Constraint:
  * An abstract class to define all the attributes of a database constraint.
  */
-abstract class Constraint implements TableEntity {
+abstract public class Constraint implements TableEntity {
 	
 	/*********************************************************************
 	 * *************************CONSTRUCTOR*******************************
 	 *********************************************************************/
 	public Constraint(String fieldName) {
 		this.fieldName = fieldName;
+		this.multiColumn = false;
 	}
 	
+	public Constraint(String[] columnNames) {
+		this.columnNames = Arrays.asList(columnNames);
+		this.multiColumn = true;
+	}
 	
 	/*********************************************************************
 	 * *********************GETTERS and SETTERS***************************
@@ -25,6 +36,21 @@ abstract class Constraint implements TableEntity {
 		this.fieldName = fieldName;
 	}
 	
+	public boolean isMultiColumn() {
+		return multiColumn;
+	}
+	
+	public void setMultiColumn(boolean multiColumn) {
+		this.multiColumn = multiColumn;
+	}
+	
+	public List<String> getColumnNames() {
+		return columnNames;
+	}
+	
+	public void setColumnNames(ArrayList<String> columnNames) {
+		this.columnNames = columnNames;
+	}
 	
 	/**
 	 * printConstraint():
@@ -41,4 +67,6 @@ abstract class Constraint implements TableEntity {
 	public abstract String getDefinition();
 	
 	private String fieldName;
+	private boolean multiColumn;
+	private List<String> columnNames;
 }

@@ -37,11 +37,11 @@ public class ColumnBuilder implements Builder {
 	}
 	
 	public static ColumnBuilder binary(String fieldName) {
-		return new ColumnBuilder(new Column(fieldName, "blob", null, false, false, false, false, null));
+		return new ColumnBuilder(new Column(fieldName, "blob", null, false, false, false, null, null));
 	}
 	
 	public static ColumnBuilder booleanValue(String fieldName) {
-		return new ColumnBuilder(new Column(fieldName, "boolean", null, false, false, false, false, null));
+		return new ColumnBuilder(new Column(fieldName, "boolean", null, false, false, false, null, null));
 	}
 	
 	public static ColumnBuilder integer(String fieldName) {
@@ -69,7 +69,7 @@ public class ColumnBuilder implements Builder {
 	}
 	
 	public static ColumnBuilder text(String fieldName) {
-		return new ColumnBuilder(new Column(fieldName, "text", null, false, false, false, false, null));
+		return new ColumnBuilder(new Column(fieldName, "text", null, false, false, false, null, null));
 	}
 	
 	public static ColumnBuilder string(String fieldName) {
@@ -77,7 +77,7 @@ public class ColumnBuilder implements Builder {
 	}
 	
 	public static ColumnBuilder string(String fieldName, Integer size) {
-		return new ColumnBuilder(new Column(fieldName, "varchar", null, false, false, false, false, size));
+		return new ColumnBuilder(new Column(fieldName, "varchar", null, false, false, false, null, size));
 	}
 	
 	public ColumnBuilder nullable() {

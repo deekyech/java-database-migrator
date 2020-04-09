@@ -67,7 +67,7 @@ class CreateMigration {
 						"\n" +
 						"import app.DatabaseMigrator;\n" +
 						"import app.database.ColumnBuilder;\n" +
-						"import app.database.ConstraintBuilder;\n" +
+						"import app.database.constraints.ConstraintBuilder;\n" +
 						"\n" +
 						"public class " + this.targetFileName + " {\n" +
 						"\tpublic static void main(String[] args) {\n" +
