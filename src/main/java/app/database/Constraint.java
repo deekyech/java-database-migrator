@@ -32,6 +32,12 @@ abstract class Constraint implements TableEntity {
 	 */
 	public abstract void printConstraint();
 	
+	/**
+	 * getDefinition():
+	 * Method to be implemented by all TableEntity classes.
+	 * Used to provide create definition during query generation.
+	 * @return : create definition
+	 */
 	public abstract String getDefinition();
 	
 	private String fieldName;

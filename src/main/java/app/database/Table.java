@@ -58,59 +58,39 @@ public class Table {
 	 */
 	public void addConstraint(Builder builder) throws Exception {
 		TableEntity entity = builder.build();
-		if (entity instanceof ForeignKeyConstraint) {
-			ForeignKeyConstraint foreignKeyConstraint = (ForeignKeyConstraint) entity;
-			
-			//Validations
-			if (columnExists(foreignKeyConstraint.getFieldName())) {
-				if (referenceTableExists(foreignKeyConstraint.getReferenceTable())) {
-					if (referenceColumnExists(foreignKeyConstraint.getReferenceFieldName())) {
-						if (isReferenceColumnPrimaryKey(foreignKeyConstraint.getReferenceFieldName())) {
-							this.constraints.add(foreignKeyConstraint);
-						} else {
-							throw new Exception("Reference tableName column exists but that column is not a primary key");
-						}
-					} else {
-						throw new Exception("Reference tableName column not found.");
-					}
-				} else {
-					throw new Exception("Reference tableName does not exist.");
-				}
+		Constraint constraint = (Constraint) entity;
+		if (this.columnExists(constraint.getFieldName())) {
+			if (!this.constraintExists(constraint.getFieldName())) {
+				this.constraints.add(constraint);
 			} else {
-				throw new Exception("Specified column does not exist.");
+				throw new Exception("Constraint already exists on specified column.");
 			}
 		} else {
-			PrimaryKeyConstraint primaryKeyConstraint = (PrimaryKeyConstraint) entity;
-			if (columnExists(primaryKeyConstraint.getFieldName())) {
-				this.constraints.add(primaryKeyConstraint);
-			} else {
-				throw new Exception("Specified column does not exist.");
-			}
+			throw new Exception("Specified column does not exist.");
 		}
 	}
 	
 	/**
-	 * isReferenceColumnPrimaryKey():
-	 * referenceColumnExists():
-	 * referenceTableExists():
-	 * columnExists():
-	 * Methods used for validations of foreign key references.
-	 * Not implemented for now. Will ask sir how it is done by laravel.
-	 * @param referenceFieldName
+	 * constraintExists():
+	 * Method to verify that no duplicate constraints are being inserted.
+	 * @param fieldName
 	 * @return
 	 */
-	private boolean isReferenceColumnPrimaryKey(String referenceFieldName) {
-		return true;
+	private boolean constraintExists(String fieldName) {
+		Iterator<Constraint> iterator = this.constraints.iterator();
+		while(iterator.hasNext()) {
+			Constraint constraint = iterator.next();
+			if (constraint.getFieldName().equals(fieldName)) return true;
+		}
+		return false;
 	}
 	
-	private boolean referenceColumnExists(String referenceFieldName) {
-		return true;
-	}
-	
-	private boolean referenceTableExists(String referenceTable) {
-		return true;
-	}
-	
+	/**
+	 * columnExists():
+	 * Methods used for validations of key references.
+	 * @param fieldName
+	 * @return
+	 */
 	private boolean columnExists(String fieldName) {
 		Iterator<Column> iterator = this.columns.iterator();
 		while(iterator.hasNext()) {
@@ -131,13 +111,23 @@ public class Table {
 		constraints.forEach(constraint -> constraint.printConstraint());
 	}
 	
-	
+	/**
+	 * toQuery():
+	 * This method returns the query for the object's structure.
+	 * @return
+	 */
 	public Query toQuery() {
 		StringBuffer query = new StringBuffer("CREATE TABLE IF NOT EXISTS " + this.tableName + "(");
 		
 		for (Column c: columns) {
 			query.append(c.getDefinition() + ", ");
 		}
+		
+		for (int i = 0; i<columns.size(); i++) {
+			query.append(columns.get(i).getDefinition());
+			if (!(i == columns.size()-1)) query.append(", ");
+		}
+		if (constraints.size()>0) query.append(", ");
 		for (int i = 0; i<constraints.size(); i++) {
 			query.append(constraints.get(i).getDefinition());
 			if (!(i == constraints.size()-1)) query.append(", ");

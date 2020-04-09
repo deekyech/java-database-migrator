@@ -2,9 +2,15 @@ package app.database;
 
 /**
  * interface TableEntity:
- * A marker interface to mark the objects that can be an attribute of a
- * database table.
+ * An interface to mark TableEntities.
  */
 public interface TableEntity {
+	
+	/**
+	 * getDefinition():
+	 * This method will convert the respective TableEntity object into
+	 * its equivalent create definition for query generation.
+	 * @return : create definition
+	 */
 	String getDefinition();
 }
