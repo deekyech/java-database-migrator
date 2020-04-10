@@ -5,9 +5,9 @@ import app.database.Builder;
 /**
  * class ConstraintBuilder:
  *
- * Not actually a Builder class.
- * It is more of a supplier class. It supplies the type of ConstraintBuilder
- * class needed. (PrimaryKeyConstraintBuilder & ForeignKeyConstraintBuilder).
+ * A constraint builder abstract class that initialises objects of its
+ * subclasses. Its Subclasses will be the builders of all SQLConstraint
+ * classes.
  */
 public abstract class ConstraintBuilder implements Builder {
 	
@@ -39,11 +39,25 @@ public abstract class ConstraintBuilder implements Builder {
 		return new PrimaryKeyConstraintBuilder(new PrimaryKeyConstraint(fieldName));
 	}
 	
-	
+	/**
+	 * unique():
+	 * A method that supplies the UniqueConstraintBuilder object for
+	 * multi-column unique constraint.
+	 * @param columnNames : All column names to which unique constraints
+	 *                      are to be applied.
+	 * @return :UniqueConstraintBuilder object.
+	 */
 	public static UniqueConstraintBuilder unique(String[] columnNames) {
 		return new UniqueConstraintBuilder(new UniqueConstraint(columnNames));
 	}
 	
+	/**
+	 * unique():
+	 * A method that supplies the UniqueConstraintBuilder object for
+	 * a single column unique constraint.
+	 * @param columnName : Column name that must be made unique.
+	 * @return : UniqueConstraintBuilder object.
+	 */
 	public static UniqueConstraintBuilder unique(String columnName) {
 		return new UniqueConstraintBuilder(new UniqueConstraint(columnName));
 	}

@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  *  class Interpreter:
  *
- *  The class that will execute the interpreter for all user cammand inputs.
+ *  The class that will execute the interpreter for all user command inputs.
  */
 public class Interpreter {
 	

@@ -1,3 +1,4 @@
 .idea/*
 target/*
-.migrationexamples/*
+migrationexamples/*
+src/main/java/app/migrations/*
