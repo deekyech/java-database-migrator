@@ -1,4 +1,4 @@
-package testing;
+package app.testing;
 
 import app.interpreter.Interpreter;
 

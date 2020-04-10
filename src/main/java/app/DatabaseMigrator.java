@@ -27,6 +27,6 @@ public class DatabaseMigrator {
 		Table table = new Table(tableName);
 		callback.accept(table);
 		new QueryExecuter(table.toQuery()).execute();
-		//System.out.println(table.toQuery());
+		System.out.println("Query Executed: " + table.toQuery());
 	}
 }

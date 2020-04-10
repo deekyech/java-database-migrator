@@ -3,6 +3,7 @@ package app.interpreter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 
 /**
@@ -26,6 +27,7 @@ public class Interpreter {
 	 * The method that will accept the user input commands.
 	 */
 	private void run() {
+		CreateMigration.init();
 		while (true) {
 			System.out.print("> ");
 			String input = this.acceptInput();
@@ -34,6 +36,13 @@ public class Interpreter {
 			if (this.isCommand(command)) {
 				if (Commands.CREATE_MIGRATION_COMMAND.equals(command)) {
 					new CreateMigration(getArguments(input));
+				} else if (Commands.MIGRATE_COMMAND.equals(command)) {
+					new Migrate();
+				} else if (Commands.EXIT_COMMAND.equals(command)) {
+					System.exit(-1);
+				} else if (Commands.HELP_COMMAND.equals(command)) {
+					System.out.println("Help: You can use the following commands:");
+					Arrays.asList(Commands.ALL_COMMANDS).forEach(System.out::println);
 				}
 			} else System.out.println("'" + command + "' is not a valid command. You may use the command 'help' to view all commands.");
 		}

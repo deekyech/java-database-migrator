@@ -1,4 +1,4 @@
-package testing;
+package app.testing;
 
 import app.DatabaseMigrator;
 import app.database.ColumnBuilder;

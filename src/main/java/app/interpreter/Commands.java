@@ -1,13 +1,22 @@
 package app.interpreter;
 
 
+import app.AppConstants;
+
 /**
  * interface Commands:
  * An interface to store the constants of all commands.
  */
 public interface Commands {
+	//Migrations folder path
+	String MIGRATIONS_DESTINATION = AppConstants.APP_ROOT + "\\migrations";
+	
+	//Commands
 	String CREATE_MIGRATION_COMMAND = "cm";
 	String HELP_COMMAND = "help";
 	String MIGRATE_COMMAND = "migrate";
-	String[] ALL_COMMANDS = new String[]{CREATE_MIGRATION_COMMAND, HELP_COMMAND, MIGRATE_COMMAND};
+	String EXIT_COMMAND = "exit";
+	
+	//Commands list
+	String[] ALL_COMMANDS = new String[]{CREATE_MIGRATION_COMMAND, HELP_COMMAND, MIGRATE_COMMAND, EXIT_COMMAND};
 }

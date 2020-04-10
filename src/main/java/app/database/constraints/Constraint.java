@@ -54,7 +54,7 @@ abstract public class Constraint implements TableEntity {
 	
 	/**
 	 * printConstraint():
-	 * Method used for testing.
+	 * Method used for app.testing.
 	 */
 	public abstract void printConstraint();
 	

@@ -1,5 +1,7 @@
 package app.database.constraints;
 
+import app.database.Builder;
+
 /**
  * class ConstraintBuilder:
  *
@@ -7,7 +9,7 @@ package app.database.constraints;
  * It is more of a supplier class. It supplies the type of ConstraintBuilder
  * class needed. (PrimaryKeyConstraintBuilder & ForeignKeyConstraintBuilder).
  */
-public class ConstraintBuilder {
+public abstract class ConstraintBuilder implements Builder {
 	
 	
 	/**
@@ -45,5 +47,7 @@ public class ConstraintBuilder {
 	public static UniqueConstraintBuilder unique(String columnName) {
 		return new UniqueConstraintBuilder(new UniqueConstraint(columnName));
 	}
+	
+	abstract public Constraint build();
 	
 }

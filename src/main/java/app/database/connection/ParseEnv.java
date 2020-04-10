@@ -1,5 +1,7 @@
 package app.database.connection;
 
+import app.AppConstants;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,7 +21,8 @@ class ParseEnv {
 	ParseEnv() {
 		
 		try {
-			envFile = new File("D:\\Dhiresh\\Drive Sync\\Coding\\Java\\Java Projects\\JavaDatabaseMigrator\\src\\main\\resources\\.env");
+			String envPath = AppConstants.PROJECT_ROOT + "\\src\\main\\resources\\.env";
+			envFile = new File(envPath);
 			variables = new HashMap<>();
 			
 			/**

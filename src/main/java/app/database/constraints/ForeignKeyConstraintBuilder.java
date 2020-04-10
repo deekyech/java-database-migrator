@@ -12,7 +12,7 @@ import app.database.Builder;
  * You can notice that all methods of this class return this.
  * This has been done to implement chaining.
  */
-public class ForeignKeyConstraintBuilder implements Builder {
+public class ForeignKeyConstraintBuilder extends ConstraintBuilder {
 	
 	/*********************************************************************
 	 * *************************CONSTRUCTOR*******************************

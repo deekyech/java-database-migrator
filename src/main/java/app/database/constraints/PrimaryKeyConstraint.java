@@ -17,7 +17,7 @@ class PrimaryKeyConstraint extends Constraint {
 	
 	/**
 	 * printConstraint():
-	 * A method used for testing
+	 * A method used for app.testing
 	 */
 	public void printConstraint() {
 		System.out.println("\nPrimaryKeyConstraint:\nName: " + this.getFieldName() + "\n");

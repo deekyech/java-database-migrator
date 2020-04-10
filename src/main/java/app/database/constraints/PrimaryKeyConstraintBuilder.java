@@ -12,7 +12,7 @@ import app.database.Builder;
  * You can notice that all methods of this class return this.
  * This has been done to implement chaining.
  */
-class PrimaryKeyConstraintBuilder implements Builder {
+class PrimaryKeyConstraintBuilder extends ConstraintBuilder {
 	
 	/*********************************************************************
 	 * *************************CONSTRUCTOR*******************************

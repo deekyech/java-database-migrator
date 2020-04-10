@@ -60,7 +60,7 @@ public class Table {
 	 * @param builder : Builder object of the constraint that is to be inserted.
 	 * @throws Exception
 	 */
-	public void addConstraint(Builder builder) throws Exception {
+	public void addConstraint(ConstraintBuilder builder) {
 		TableEntity entity = builder.build();
 		Constraint constraint = (Constraint) entity;
 		if (!constraint.isMultiColumn()) {
@@ -68,10 +68,10 @@ public class Table {
 				if (!this.constraintExists(constraint.getFieldName())) {
 					this.constraints.add(constraint);
 				} else {
-					throw new Exception("Constraint already exists on specified column.");
+					System.out.println("Constraint already exists on specified column.");
 				}
 			} else {
-				throw new Exception("Specified column does not exist.");
+				System.out.println("Specified column does not exist.");
 			}
 		} else {
 			List<String> columnList = constraint.getColumnNames();
@@ -80,10 +80,10 @@ public class Table {
 					if (!this.constraintExists(column)) {
 					
 					} else {
-						throw new Exception("Constraint already exists on specified column.");
+						System.out.println("Constraint already exists on specified column.");
 					}
 				} else {
-					throw new Exception("Specified column does not exist.");
+					System.out.println("Specified column does not exist.");
 				}
 			}
 			this.constraints.add(constraint);
@@ -122,7 +122,7 @@ public class Table {
 	
 	/**
 	 * printTable():
-	 * Created for testing purposes
+	 * Created for app.testing purposes
 	 */
 	public void printTable() {
 		System.out.println("Table " + tableName + "\n\nColumns List:\n");

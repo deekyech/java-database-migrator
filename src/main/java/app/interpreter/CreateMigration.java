@@ -61,22 +61,29 @@ class CreateMigration {
 	 */
 	private void performOperation() {
 		try {
-			File migrationFile = new File("D:\\Dhiresh\\Drive Sync\\Coding\\Java\\Java Projects\\JavaDatabaseMigrator\\src\\main\\java\\app\\migrations\\" + this.targetFileName + ".java");
+			File migrationFile = new File(Commands.MIGRATIONS_DESTINATION + "\\" + this.targetFileName + ".java");
 			if (migrationFile.createNewFile()) {
-				String template = "package app.migrations;\n" +
+
+				String template = //"package app.migrations;\n" +
 						"\n" +
 						"import app.DatabaseMigrator;\n" +
 						"import app.database.ColumnBuilder;\n" +
 						"import app.database.constraints.ConstraintBuilder;\n" +
 						"\n" +
 						"public class " + this.targetFileName + " {\n" +
-						"\tpublic static void main(String[] args) {\n" +
+						"\t\n" +
+						"\tpublic void up() {\n" +
 						"\t\tDatabaseMigrator." + this.operation.toLowerCase() + "(\"" + this.tableName + "\", (table) -> {\n" +
-						"\t\t\ttable.id();\t\n" +
-						"\n" +
+						"\t\t\ttable.id(); // Primary Key\n" +
+						"\t\t\t\n" +
 						"\t\t});\n" +
 						"\t}\n" +
-						"}";
+						"\t\n" +
+						"\tpublic void down() {\n" +
+						"\t\n" +
+						"\t}\n" +
+						"\t\n" +
+						"}\n";
 				
 				FileOutputStream fileOutputStream = new FileOutputStream(migrationFile);
 				fileOutputStream.write(template.getBytes());
@@ -87,6 +94,49 @@ class CreateMigration {
 		}
 	}
 	
+	/**
+	 * init():
+	 * The method that will create the initial migrations.
+	 *
+	 * The initial migrations are :
+	 * 1. CreateUsersTable
+	 */
+	public static void init() {
+		try {
+			File migrationFile = new File(Commands.MIGRATIONS_DESTINATION + "\\CreateUsersTable00000000.java");
+			if (migrationFile.createNewFile()) {
+				System.out.println("New file created");
+				String template = //"package app.migrations;\n" +
+						"\n" +
+						"import app.DatabaseMigrator;\n" +
+						"import app.database.ColumnBuilder;\n" +
+						"import app.database.constraints.ConstraintBuilder;\n" +
+						"\n" +
+						"public class CreateUsersTable00000000 {\n" +
+						"\t\n" +
+						"\tpublic void up() {\n" +
+						"\t\tDatabaseMigrator.create(\"users\", (table) -> {\n" +
+						"\t\t\ttable.id(); // Primary Key\n" +
+						"\t\t\ttable.addColumn(ColumnBuilder.string(\"name\"));\n" +
+						"\t\t\ttable.addColumn(ColumnBuilder.string(\"email\").unique());\n" +
+						"\t\t\ttable.addColumn(ColumnBuilder.string(\"password\"));\n" +
+						"\t\t});\n" +
+						"\t}\n" +
+						"\t\n" +
+						"\tpublic void down() {\n" +
+						"\t\n" +
+						"\t}\n" +
+						"\t\n" +
+						"}\n";
+				
+				FileOutputStream fileOutputStream = new FileOutputStream(migrationFile);
+				fileOutputStream.write(template.getBytes());
+				fileOutputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * isNameValid():
@@ -146,7 +196,7 @@ class CreateMigration {
 			tableName = tableName.substring(0, 1).toLowerCase() + tableName.substring(1);
 			for (int i = 0; i<tableName.length(); i++) {
 				if (Character.isUpperCase(tableName.charAt(i))) {
-					tableName = tableName.substring(0, i) + "-" + tableName.substring(i, i+1).toLowerCase() + tableName.substring(i+1);
+					tableName = tableName.substring(0, i) + "_" + tableName.substring(i, i+1).toLowerCase() + tableName.substring(i+1);
 				}
 			}
 			return tableName;
