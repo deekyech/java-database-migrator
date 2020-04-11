@@ -21,7 +21,7 @@ class CreateMigration {
 	 *********************************************************************/
 	public CreateMigration(String args) {
 		this.computeDataMembers(args);
-		this.performOperation();
+		if (dataMembersValid) this.performOperation();
 	}
 	
 	/**
@@ -38,6 +38,7 @@ class CreateMigration {
 				this.operation = this.computeOperation(this.fileName).toLowerCase();
 				this.tableName = this.computeTableName(args);
 				this.targetFileName = this.computeTargetFileName(this.fileName);
+				dataMembersValid = true;
 			} else System.out.println("-usage: file_name syntax is (Create|Alter)<TableName>Table");
 		} else System.out.println("-usage: cm <file_name> [<table_name>]");
 	}
@@ -64,8 +65,7 @@ class CreateMigration {
 			File migrationFile = new File(Commands.MIGRATIONS_DESTINATION + "\\" + this.targetFileName + ".java");
 			if (migrationFile.createNewFile()) {
 
-				String template = //"package app.migrations;\n" +
-						"\n" +
+				String template = "\n" +
 						"import app.DatabaseMigrator;\n" +
 						"import app.database.ColumnBuilder;\n" +
 						"import app.database.constraints.ConstraintBuilder;\n" +
@@ -73,14 +73,13 @@ class CreateMigration {
 						"public class " + this.targetFileName + " {\n" +
 						"\t\n" +
 						"\tpublic void up() {\n" +
-						"\t\tDatabaseMigrator." + this.operation.toLowerCase() + "(\"" + this.tableName + "\", (table) -> {\n" +
-						"\t\t\ttable.id(); // Primary Key\n" +
-						"\t\t\t\n" +
+						"\t\tDatabaseMigrator." + ("create".equalsIgnoreCase(this.operation) ? "create" : "table") + "(\"" + this.tableName + "\", (table) -> {\n" +
+						"\t\t\t" + ("create".equalsIgnoreCase(this.operation) ? "table.id(); // Primary Key" : "") + "\n" +
 						"\t\t});\n" +
 						"\t}\n" +
 						"\t\n" +
 						"\tpublic void down() {\n" +
-						"\t\n" +
+						"\t\t" + ("create".equalsIgnoreCase(this.operation)? "DatabaseMigrator.dropIfExists(\"" + this.tableName + "\");" : "") + "\n" +
 						"\t}\n" +
 						"\t\n" +
 						"}\n";
@@ -105,9 +104,7 @@ class CreateMigration {
 		try {
 			File migrationFile = new File(Commands.MIGRATIONS_DESTINATION + "\\CreateUsersTable00000000.java");
 			if (migrationFile.createNewFile()) {
-				System.out.println("New file created");
-				String template = //"package app.migrations;\n" +
-						"\n" +
+				String template = "\n" +
 						"import app.DatabaseMigrator;\n" +
 						"import app.database.ColumnBuilder;\n" +
 						"import app.database.constraints.ConstraintBuilder;\n" +
@@ -234,4 +231,5 @@ class CreateMigration {
 	String tableName;
 	String fileName;
 	String targetFileName;
+	boolean dataMembersValid = false;
 }

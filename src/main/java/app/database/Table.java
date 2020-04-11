@@ -65,7 +65,7 @@ public class Table {
 		Constraint constraint = (Constraint) entity;
 		if (!constraint.isMultiColumn()) {
 			if (this.columnExists(constraint.getFieldName())) {
-				if (!this.constraintExists(constraint.getFieldName())) {
+				if (!this.constraintExists(constraint)) {
 					this.constraints.add(constraint);
 				} else {
 					System.out.println("Constraint already exists on specified column.");
@@ -88,6 +88,15 @@ public class Table {
 			}
 			this.constraints.add(constraint);
 		}
+	}
+	
+	private boolean constraintExists(Constraint newConstraint) {
+		Iterator<Constraint> iterator = this.constraints.iterator();
+		while(iterator.hasNext()) {
+			Constraint constraint = iterator.next();
+			if (constraint.getFieldName().equals(newConstraint.getFieldName()) && constraint.getClass() == newConstraint.getClass()) return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -132,17 +141,13 @@ public class Table {
 	}
 	
 	/**
-	 * toQuery():
+	 * toCreateQuery():
 	 * This method returns the query for the object's structure.
 	 * @return
 	 */
-	public Query toQuery() {
+	public Query toCreateQuery() {
 		StringBuffer query = new StringBuffer("CREATE TABLE IF NOT EXISTS " + this.tableName + "(");
 		
-		/*for (Column c: columns) {
-			query.append(c.getDefinition() + ", ");
-		}
-		*/
 		for (int i = 0; i<columns.size(); i++) {
 			query.append(columns.get(i).getDefinition());
 			if (!(i == columns.size()-1)) query.append(", ");
@@ -156,6 +161,12 @@ public class Table {
 		query.append(")");
 		return new Query(query.toString());
 	}
+	
+	public Query toAlterQuery() {
+		// To be implemented
+		return null;
+	}
+	
 	
 	private String tableName;
 	private List<Column> columns;

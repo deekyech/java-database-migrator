@@ -63,6 +63,7 @@ public class Migrate {
 								   Class migrationClass = this.loadClass(migrationClassName);
 								   migrationClass.getMethod("up").invoke(migrationClass.newInstance());
 							   } catch (Exception e) {
+							   	   System.out.println(migrationClassName + " was not executed!");
 								   e.printStackTrace();
 							   }
 						   });
