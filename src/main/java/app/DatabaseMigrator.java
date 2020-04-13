@@ -1,5 +1,7 @@
 package app;
 
+import app.database.AlterTable;
+import app.database.CreateTable;
 import app.database.Table;
 import app.database.queries.Query;
 import app.database.queries.QueryExecuter;
@@ -25,10 +27,10 @@ public class DatabaseMigrator {
 	 *                 constraints.
 	 */
 	public static void create(String tableName, Consumer<Table> callback) {
-		Table table = new Table(tableName);
+		Table table = new CreateTable(tableName);
 		callback.accept(table);
-		new QueryExecuter(table.toCreateQuery()).execute();
-		System.out.println("Query Executed: " + table.toCreateQuery());
+		new QueryExecuter(table.toQuery()).execute();
+		System.out.println("Query Executed: " + table.toQuery());
 	}
 	
 	
@@ -39,10 +41,10 @@ public class DatabaseMigrator {
 	 * @param callback
 	 */
 	public static void table(String tableName, Consumer<Table> callback) {
-		Table table = new Table(tableName);
+		Table table = new AlterTable(tableName);
 		callback.accept(table);
-		new QueryExecuter(table.toAlterQuery()).execute();
-		System.out.println("Query Executed: " + table.toCreateQuery());
+		new QueryExecuter(table.toQuery()).execute();
+		System.out.println("Query Executed: " + table.toQuery());
 	}
 	
 	/**

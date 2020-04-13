@@ -54,7 +54,7 @@ class ForeignKeyConstraint extends Constraint {
 	 * A method used for app.testing
 	 */
 	public void printConstraint() {
-		System.out.println("\nForeignKeyConstraint:\nName: " + this.getFieldName() + "\nReference Field Name: " + this.getReferenceFieldName() + "\nReference Table: " + this.getReferenceTable());
+		System.out.println("\nForeignKeyConstraint:\nName: " + this.getFieldName() + "\nReference Field Name: " + this.getReferenceFieldName() + "\nReference CreateTable: " + this.getReferenceTable());
 	}
 	
 	public String getDefinition() {

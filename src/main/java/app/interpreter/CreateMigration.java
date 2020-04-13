@@ -39,7 +39,7 @@ class CreateMigration {
 				this.tableName = this.computeTableName(args);
 				this.targetFileName = this.computeTargetFileName(this.fileName);
 				dataMembersValid = true;
-			} else System.out.println("-usage: file_name syntax is (Create|Alter)<TableName>Table");
+			} else System.out.println("-usage: file_name syntax is (Create|Alter)<TableName>CreateTable");
 		} else System.out.println("-usage: cm <file_name> [<table_name>]");
 	}
 	
