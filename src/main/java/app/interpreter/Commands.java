@@ -8,8 +8,7 @@ import app.AppConstants;
  * An interface to store the constants of all commands.
  */
 public interface Commands {
-	//Migrations folder path
-	String MIGRATIONS_DESTINATION = AppConstants.APP_ROOT + "\\migrations";
+	
 	
 	//Commands
 	String CREATE_MIGRATION_COMMAND = "cm";

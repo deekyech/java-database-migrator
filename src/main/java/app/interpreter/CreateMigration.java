@@ -1,5 +1,7 @@
 package app.interpreter;
 
+import app.AppConstants;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
@@ -62,7 +64,7 @@ class CreateMigration {
 	 */
 	private void performOperation() {
 		try {
-			File migrationFile = new File(Commands.MIGRATIONS_DESTINATION + "\\" + this.targetFileName + ".java");
+			File migrationFile = new File(AppConstants.MIGRATIONS_DESTINATION + "\\" + this.targetFileName + ".java");
 			if (migrationFile.createNewFile()) {
 
 				String template = "\n" +
@@ -102,7 +104,7 @@ class CreateMigration {
 	 */
 	public static void init() {
 		try {
-			File migrationFile = new File(Commands.MIGRATIONS_DESTINATION + "\\CreateUsersTable00000000.java");
+			File migrationFile = new File(AppConstants.MIGRATIONS_DESTINATION + "\\CreateUsersTable00000000.java");
 			if (migrationFile.createNewFile()) {
 				String template = "\n" +
 						"import app.DatabaseMigrator;\n" +

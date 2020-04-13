@@ -41,85 +41,6 @@ public class CreateTable extends Table {
 	}
 	
 	
-	
-	@Override
-	/**
-	 * addConstraint():
-	 * Method that will be called from the migration file to add a constraint to
-	 * the tableName.
-	 *
-	 * @param builder : Builder object of the constraint that is to be inserted.
-	 * @throws Exception
-	 */
-	public void addConstraint(ConstraintBuilder builder) {
-		TableEntity entity = builder.build();
-		Constraint constraint = (Constraint) entity;
-		if (!constraint.isMultiColumn()) {
-			if (this.columnExists(constraint.getFieldName())) {
-				if (!this.constraintExists(constraint)) {
-					this.constraints.add(constraint);
-				} else {
-					System.out.println("Constraint already exists on specified column.");
-				}
-			} else {
-				System.out.println("Specified column does not exist.");
-			}
-		} else {
-			List<String> columnList = constraint.getColumnNames();
-			for (String column: columnList) {
-				if (this.columnExists(column)) {
-					if (!this.constraintExists(column)) {
-					
-					} else {
-						System.out.println("Constraint already exists on specified column.");
-					}
-				} else {
-					System.out.println("Specified column does not exist.");
-				}
-			}
-			this.constraints.add(constraint);
-		}
-	}
-	
-	private boolean constraintExists(Constraint newConstraint) {
-		Iterator<Constraint> iterator = this.constraints.iterator();
-		while(iterator.hasNext()) {
-			Constraint constraint = iterator.next();
-			if (constraint.getFieldName().equals(newConstraint.getFieldName()) && constraint.getClass() == newConstraint.getClass()) return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * constraintExists():
-	 * Method to verify that no duplicate constraints are being inserted.
-	 * @param fieldName
-	 * @return
-	 */
-	private boolean constraintExists(String fieldName) {
-		Iterator<Constraint> iterator = this.constraints.iterator();
-		while(iterator.hasNext()) {
-			Constraint constraint = iterator.next();
-			if (constraint.getFieldName().equals(fieldName)) return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * columnExists():
-	 * Methods used for validations of key references.
-	 * @param fieldName
-	 * @return
-	 */
-	private boolean columnExists(String fieldName) {
-		Iterator<Column> iterator = this.columns.iterator();
-		while(iterator.hasNext()) {
-			Column column = iterator.next();
-			if (column.getName().equals(fieldName)) return true;
-		}
-		return false;
-	}
-	
 	/**
 	 * printTable():
 	 * Created for app.testing purposes
@@ -149,7 +70,6 @@ public class CreateTable extends Table {
 			query.append(constraints.get(i).getDefinition());
 			if (!(i == constraints.size()-1)) query.append(", ");
 		}
-		
 		query.append(")");
 		return new Query(query.toString());
 	}

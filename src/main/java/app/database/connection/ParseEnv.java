@@ -13,12 +13,12 @@ import java.util.HashMap;
  * operations on the database.
  *
  */
-class ParseEnv {
+public class ParseEnv {
 	
 	/*********************************************************************
 	 * *************************CONSTRUCTOR*******************************
 	 *********************************************************************/
-	ParseEnv() {
+	public ParseEnv() {
 		
 		try {
 			String envPath = AppConstants.PROJECT_ROOT + "\\src\\main\\resources\\.env";
@@ -32,6 +32,8 @@ class ParseEnv {
 			 */
 			Files
 					.readAllLines(envFile.toPath())
+					.stream()
+					.filter(line -> !(line.startsWith("#") || "".equals(line)))
 					.forEach((line) -> {
 						if (!("".equals(line) || line == null)) variables.put(line.split("=")[0], line.split("=")[1]);
 					});
@@ -49,7 +51,7 @@ class ParseEnv {
 	 * @param variable : Variable key
 	 * @return : Variable value
 	 */
-	String getDatabaseVariable(String variable) {
+	public String getDatabaseVariable(String variable) {
 		return variables.get(variable);
 	}
 	

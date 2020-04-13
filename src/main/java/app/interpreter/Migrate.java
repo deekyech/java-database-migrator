@@ -1,6 +1,8 @@
 package app.interpreter;
 
 
+import app.AppConstants;
+
 import javax.tools.*;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -46,7 +48,7 @@ public class Migrate {
 		File[] migrationClassesFiles = this.getAllMigrationClasses();
 		URL migrationsURL;
 		try {
-			migrationsURL = new URL("file://" + Commands.MIGRATIONS_DESTINATION + "\\");
+			migrationsURL = new URL("file://" + AppConstants.MIGRATIONS_DESTINATION + "\\");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return;
@@ -111,6 +113,7 @@ public class Migrate {
 	private Class loadClass(String className) {
 		try {
 			return this.loader.loadClass(className);
+//			return Class.forName(className, false, loader);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
@@ -124,7 +127,7 @@ public class Migrate {
 	 * @return
 	 */
 	private File[] getAllMigrationClasses() {
-		File migrationsDirectory = new File(Commands.MIGRATIONS_DESTINATION);
+		File migrationsDirectory = new File(AppConstants.MIGRATIONS_DESTINATION);
 		if (migrationsDirectory.exists() && migrationsDirectory.isDirectory())
 			return migrationsDirectory.listFiles((directory, fileName) -> {
 				String migrationClassFileRegex = "^(Create|Alter)(([A-Z][a-z]+)+)Table[0-9]+\\.class$";
@@ -161,7 +164,7 @@ public class Migrate {
 	 * @return
 	 */
 	private File[] getAllMigrations() {
-		File migrationsDirectory = new File(Commands.MIGRATIONS_DESTINATION);
+		File migrationsDirectory = new File(AppConstants.MIGRATIONS_DESTINATION);
 		if (migrationsDirectory.exists() && migrationsDirectory.isDirectory())
 			return migrationsDirectory.listFiles((directory, fileName) -> {
 				String migrationFileRegex = "^(Create|Alter)(([A-Z][a-z]+)+)Table[0-9]+\\.java$";

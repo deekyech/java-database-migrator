@@ -3,3 +3,4 @@ target/*
 migrationexamples/*
 src/main/java/app/migrations/*
 src/main/java/app/testing/*
+src/main/resources/migrations/*
