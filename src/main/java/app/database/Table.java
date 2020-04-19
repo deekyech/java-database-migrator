@@ -53,6 +53,8 @@ public abstract class Table {
 	public void id() {}
 	public void id(String columnName) {}
 	
+	public void modifyColumn(ColumnBuilder columnBuilder) {}
+	
 	/**
 	 * dropColumn() && dropConstraint():
 	 * To be overridden by the AlterTable class since
